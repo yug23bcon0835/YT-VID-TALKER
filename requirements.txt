@@ -2,13 +2,10 @@ fastapi
 python-dotenv
 aiofiles
 requests
-azure-storage-file-datalake
 langchain-groq
 langchain
-sentence-transformers
 groq
 pinecone-client
-yt-dlp
-pydub
 langchain-core
 langchain-classic
+youtube-transcript-api
