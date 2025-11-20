@@ -27,6 +27,7 @@ import {
 } from "@/components/ui/sheet";
 import { useToast } from "@/hooks/use-toast"; // Assuming you added the Toast hook
 import { ThemeToggle } from "@/components/ThemeToggle"; // Assuming you created ThemeToggle
+import { getApiEndpoint } from "@/lib/api-config"; // API configuration utility
 
 // Define the structure for a chat message
 interface Message {
@@ -66,7 +67,7 @@ export default function Home() {
     setTranscriptFilePath(null); // Clear previous transcript path
 
     try {
-      const response = await fetch("http://localhost:8000/api/process-video", {
+      const response = await fetch(getApiEndpoint("/api/process-video"), {
         method: "POST",
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ url: url }),
@@ -114,7 +115,7 @@ export default function Home() {
     setQuestion(""); 
 
     try {
-      const response = await fetch("http://localhost:8000/api/ask-question", {
+      const response = await fetch(getApiEndpoint("/api/ask-question"), {
         method: "POST",
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ query: currentQuestion }), // Use captured question
@@ -158,7 +159,7 @@ export default function Home() {
     setError(null);
 
     try {
-      const response = await fetch("http://localhost:8000/api/generate-blog", {
+      const response = await fetch(getApiEndpoint("/api/generate-blog"), {
          method: "POST",
          headers: { 'Content-Type': 'application/json' },
          body: JSON.stringify({ transcript_file: transcriptFilePath }), // Send the path
