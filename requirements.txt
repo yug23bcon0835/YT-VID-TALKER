@@ -9,3 +9,4 @@ pinecone-client
 langchain-core
 langchain-classic
 youtube-transcript-api
+huggingface_hub
