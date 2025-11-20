@@ -136,6 +136,11 @@ Video Demo - [screen-capture.webm](https://github.com/user-attachments/assets/73
    
    Create a `.env.local` file in the root directory:
    ```env
+   # API Configuration
+   # For local development with separate backend:
+   NEXT_PUBLIC_API_URL=http://localhost:8000
+   # For Vercel deployment, leave empty or omit this variable
+   
    # AI Services
    GROQ_API_KEY=your_groq_api_key
    SARVAM_API_KEY=your_sarvam_api_key
@@ -173,11 +178,19 @@ Video Demo - [screen-capture.webm](https://github.com/user-attachments/assets/73
 
 ### Vercel Deployment
 
-The project is configured for Vercel deployment:
+The project is configured for seamless Vercel deployment:
 
 1. **Connect your repository** to Vercel
-2. **Configure environment variables** in Vercel dashboard
-3. **Deploy** - Vercel will automatically detect and build both frontend and backend
+2. **Configure environment variables** in Vercel dashboard:
+   - Add all AI service keys (GROQ_API_KEY, SARVAM_API_KEY, PINECONE_API_KEY)
+   - Add Azure Storage credentials
+   - **Do NOT set NEXT_PUBLIC_API_URL** - it should be empty for production
+3. **Deploy** - Vercel will automatically:
+   - Detect and build the Next.js frontend
+   - Deploy the FastAPI backend as serverless functions
+   - Configure rewrites to route `/api/*` requests to the Python backend
+
+**Note**: The frontend automatically uses relative URLs in production (via Vercel rewrites) and supports a custom API URL in development via the `NEXT_PUBLIC_API_URL` environment variable.
 
 ## 🔧 API Endpoints
 
@@ -233,6 +246,8 @@ ytvidtalker/
 │   └── blog_generation.py      # Content generation
 ├── hooks/                      # Custom React hooks
 ├── lib/                        # Utility functions
+│   ├── api-config.ts           # API URL configuration
+│   └── utils.ts                # Helper utilities
 ├── public/                     # Static assets
 └── styles/                     # Additional styles
 ```
